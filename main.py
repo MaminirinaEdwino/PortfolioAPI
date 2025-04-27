@@ -2,7 +2,6 @@
 from fastapi import FastAPI, Depends, HTTPException, Request, status
 from fastapi.templating import Jinja2Templates
 from requests import Session
-import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from db import Base, engine, SessionLocal, get_db
 from fastapi.security import  OAuth2PasswordRequestForm
@@ -12,7 +11,6 @@ from user import UserDB, UserCreate, User, Token
 from security import *
 from portfolio.route import portfolio_router
 from fastapi.staticfiles import StaticFiles
-from portfolio.model import portfolio_create
 
 app = FastAPI(title='PortfolioAPI', description='This is an API that can be used to manage a portfolio.', version='1.0.0') 
 app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_credentials=True, allow_methods=['*'], allow_headers=['*'])
@@ -147,5 +145,4 @@ async def get_portfolio_by_lien_portfolio(lien_portfolio: str, request: Request,
     }
 
 app.include_router(portfolio_router, tags=['portfolio'])
-if __name__ == '__main__':
-	uvicorn.run('main:app', host='0.0.0.0', port=8008, reload=True)
+
