@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/app.css') }}">
+    <link rel="stylesheet" href="../static/css/app.css">
+    <title>{{ portfolio.user.first_name }} {{ portfolio.user.last_name }}</title>
+</head>
+
+<body>
+    <!-- Template 1 {{ portfolio.user.first_name }} {{ portfolio.user.last_name }} 
+    <img src="{{ url_for('get_image', id = 1) }}" alt="" style="width: 50px;">
+    
+    {% for key in portfolio.experience_professionnelle %}
+        {{ key }}
+    {% endfor %} -->
+
+    <header class="w-full border-b-2 border-black flex flex-wrap items-center p-1 text-xs sticky top-0 bg-white ">
+        <span class="font-bold w-full text-center text-lg">{{ portfolio.user.first_name }} {{ portfolio.user.last_name
+            }}</span>
+        <nav class="flex gap-4 justify-between">
+            <a class="hover:font-bold hover:underline" href="#home">Home</a>
+            <a class="hover:font-bold hover:underline" href="#about">About Me</a>
+            <a class="hover:font-bold hover:underline" href="#xp">Experience</a>
+            <a class="hover:font-bold hover:underline" href="#skills">Skills</a>
+            <a class="hover:font-bold hover:underline" href="#hobbies">Hobbies</a>
+            <a class="hover:font-bold hover:underline" href="#contacts">Contacts</a>
+        </nav>
+    </header>
+    <section id="home" class=" h-[75vh] flex flex-wrap items-center justify-center bg-cover bg-no-repeat bg-center border border-black">
+        
+        <div class="w-full h-fit flex justify-center items-center">
+            <img src="{{ url_for('get_image', id = portfolio.id) }}" alt="Profile Picture" class="w-[50%]">
+        </div>
+        <div class=" w-full  flex flex-col  justify-center items-center ">
+            <h1>Welcome to My Portfolio</h1>
+            <p>My name is {{ portfolio.user.first_name }} {{ portfolio.user.last_name }}</p>
+            <a href="#about" class="m-2 px-4 py-1 border-2 border-black hover:bg-black hover:text-white">Read More</a>
+        </div>
+    </section>
+    <section id="about">
+        <h1>About Me</h1>
+        <p>{{ portfolio.user.first_name }} {{ portfolio.user.last_name }}</p>
+        <p>post {{ portfolio.domaine }}</p>
+        <p>{{ portfolio.user.age }} ans</p>
+
+        <p>{{ portfolio.lettre_introduction }}</p>
+    </section>
+    <section id="xp">
+        {% for xp in portfolio.experience_professionnelle %}
+        <div>{{ xp.titre }} {{ xp.annee }} {{ xp.entreprise }}</div>
+        {% endfor %}
+    </section>
+    <section id="skills">
+        <h1>Skills</h1>
+        {% for skill in portfolio.skills %}
+        <div>{{ skill.titre }} {{ skill.niveau }}</div>
+        {% endfor %}
+        <h1>Languages</h1>
+        {% for skill in portfolio.langue %}
+        <div>{{ skill.titre }}</div>
+        {% endfor %}
+    </section>
+    <section id="hobbies">
+        <h1>Hobbies</h1>
+        {% for hobby in portfolio.loisir %}
+        <div>{{ hobby }}</div>
+        {% endfor %}
+    </section>
+    <section id="contacts">
+        <h1>Contact me</h1>
+        <p>{{ portfolio.user.adresse }}</p>
+        <p>{{ portfolio.user.email }}</p>
+        <p>{{ portfolio.user.telephone }}</p>
+        <p>{{ portfolio.user.linkedin }}</p>
+        <p>{{ portfolio.user.facebook }}</p>
+    </section>
+</body>
+
+</html>
