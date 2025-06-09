@@ -139,9 +139,23 @@ async def get_portfolio_by_nombre_visite(nombre_visite: str, db: Session = Depen
 		raise HTTPException(status_code=404, detail="portfolio not found")
 	return db_portfolio
 
-@portfolio_router.get("/{id_user}", dependencies=[Depends(get_current_active_user)])
+@portfolio_router.get("/user/{id_user}", dependencies=[Depends(get_current_active_user)])
 async def get_portfolio_by_id_user(id_user: str, db: Session = Depends(get_db)):
 	db_portfolio = db.query(portfolio).filter(portfolio.id_user == id_user).all()	
 	if not db_portfolio:
 		raise HTTPException(status_code=404, detail="portfolio not found")
 	return db_portfolio
+
+@portfolio_router.get("/user/last/{id_user}", dependencies=[Depends(get_current_active_user)])
+async def get_last_portfolio_by_id_user(id_user: str, db: Session = Depends(get_db)):
+	db_portfolio = db.query(portfolio).filter(portfolio.id_user == id_user).all()	
+	if not db_portfolio:
+		raise HTTPException(status_code=404, detail="portfolio not found")
+	return db_portfolio[len(db_portfolio) - 1]
+
+@portfolio_router.get("/template/{lien_portfolio}")
+async def get_template_by_id_portfolio(lien_portfolio: str, db: Session = Depends(get_db)):
+	db_portfolio = db.query(portfolio).filter(portfolio.lien_portfolio == lien_portfolio).first()
+	if not db_portfolio:
+		raise HTTPException(status_code=404, detail="portfolio not found")
+	return db_portfolio.template
